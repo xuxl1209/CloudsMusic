@@ -1,0 +1,13 @@
+.qtc_clangd/
+CloudsMusic/
+debug/
+release/
+bin/
+include
+lib/
+*.stash
+Makefile
+*.Debug
+*.Release
+*.user
+*.pdb

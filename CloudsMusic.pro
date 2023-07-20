@@ -34,7 +34,7 @@ qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
-win32: LIBS += -L$$PWD/lib/vlc/ -llibvlc -llibvlccore
+win32: LIBS += -L$$PWD/lib/ -lVLCQtCore -lVLCQtQml -lVLCQtWidgets
 
 INCLUDEPATH += $$PWD/include
 DEPENDPATH += $$PWD/include

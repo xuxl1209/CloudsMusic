@@ -21,7 +21,8 @@ MainW::MainW(QWidget *parent)
     setWindowFlags(Qt::FramelessWindowHint);
 
     initUI();
-    m_player->setMedia("E:/WorkSpace/英雄联盟 _ Against the Current - Legends Never Die.mp3");
+    QString file = "E:/WorkSpace/英雄联盟 _ Against the Current - Legends Never Die.mp3";
+    m_player->loadMedia(file);
 }
 
 MainW::~MainW()
@@ -156,8 +157,8 @@ void MainW::on_playBtn_clicked()
         ui->playBtn->setIcon(QIcon("./resource/image/暂停.png"));
         m_isPlay = true;
 
-        int sec = m_player->getTime() / 1000 + (m_player->getTime() % 1000 == 0 ? 0 : 1);
-        ui->timeLab->setText((sec / 60 >= 10 ? "" : "0") + QString::number(sec / 60) + ":" + QString::number(sec % 60));
+//        int sec = m_player->getTime() / 1000 + (m_player->getTime() % 1000 == 0 ? 0 : 1);
+//        ui->timeLab->setText((sec / 60 >= 10 ? "" : "0") + QString::number(sec / 60) + ":" + QString::number(sec % 60));
         m_player->play();
     }
 }

@@ -70,6 +70,10 @@ private slots:
      */
     void on_playBtn_clicked();
 
+    void lengthChanged(int length);
+
+    void timeChanged(int time);
+
 private:
     Ui::MainW *ui;
 
@@ -82,5 +86,9 @@ private:
     QPoint m_mousePressPoint;
 
     MediaPlayer* m_player = nullptr;
+
+    QString totalTimeStr;
+
+    QString curTimeStr;
 };
 #endif // MAINW_H

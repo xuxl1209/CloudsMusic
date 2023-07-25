@@ -14,19 +14,22 @@ MainW::MainW(QWidget *parent)
     , m_isMax(false)
     , m_isMousePress(false)
     , m_mousePressPoint(-1, -1)
-    , m_player(new MediaPlayer)
-{
+    , m_player(new MediaPlayer) {
     ui->setupUi(this);
     setWindowTitle("无限云音乐");
     setWindowFlags(Qt::FramelessWindowHint);
 
     initUI();
-    QString file = "E:/WorkSpace/英雄联盟 _ Against the Current - Legends Never Die.mp3";
+    QString file = "E:/WorkSpace/Media/英雄联盟 _ Against the Current - Legends Never Die.mp3";
     m_player->loadMedia(file);
+
+    connect(m_player, &MediaPlayer::lengthChanged, this, &MainW::lengthChanged);
+    connect(m_player, &MediaPlayer::timeChanged, this, &MainW::timeChanged);
 }
 
-MainW::~MainW()
-{
+MainW::~MainW() {
+    disconnect(m_player, &MediaPlayer::lengthChanged, this, &MainW::lengthChanged);
+    disconnect(m_player, &MediaPlayer::timeChanged, this, &MainW::timeChanged);
     if(m_player){
         m_player->stop();
         delete m_player;
@@ -35,8 +38,7 @@ MainW::~MainW()
     delete ui;
 }
 
-void MainW::initUI()
-{
+void MainW::initUI() {
     QFile *styleFile;
     styleFile  = new QFile("./resource/style/style-dark.qss");
     styleFile->open(QFile::ReadOnly);
@@ -99,22 +101,19 @@ void MainW::initUI()
     ui->playListExBtn->setText("0");
 }
 
-void MainW::mousePressEvent(QMouseEvent *event)
-{
+void MainW::mousePressEvent(QMouseEvent *event) {
     if(event->button() == Qt::MouseButton::LeftButton && event->pos().x() > 5 && event->pos().x() < (this->width() - 5) && event->y() < 60){
         m_isMousePress = true;
         m_mousePressPoint = event->globalPos();
     }
 }
 
-void MainW::mouseReleaseEvent(QMouseEvent *event)
-{
+void MainW::mouseReleaseEvent(QMouseEvent *event) {
     m_isMousePress = false;
 }
 
-void MainW::mouseMoveEvent(QMouseEvent *event)
-{
-    if(m_isMousePress){
+void MainW::mouseMoveEvent(QMouseEvent *event) {
+    if(m_isMousePress) {
         auto point = event->globalPos();
         int subX = point.x() - m_mousePressPoint.x();
         int subY = point.y() - m_mousePressPoint.y();
@@ -124,41 +123,69 @@ void MainW::mouseMoveEvent(QMouseEvent *event)
     }
 }
 
-void MainW::on_minBtn_clicked()
-{
+void MainW::on_minBtn_clicked() {
     setWindowState(Qt::WindowMinimized);
 }
 
-void MainW::on_winBtn_clicked()
-{
-    if(m_isMax){
+void MainW::on_winBtn_clicked() {
+    if(m_isMax) {
         setWindowState(Qt::WindowNoState);
         ui->winBtn->setIcon(QIcon("./resource/image/最大化.png"));
         m_isMax = false;
-    }else{
+    } else {
         setWindowState(Qt::WindowMaximized);
         ui->winBtn->setIcon(QIcon("./resource/image/窗口化.png"));
         m_isMax = true;
     }
 }
 
-void MainW::on_closeBtn_clicked()
-{
+void MainW::on_closeBtn_clicked() {
     qApp->exit(1);
 }
 
-void MainW::on_playBtn_clicked()
-{
-    if(m_isPlay){
+void MainW::on_playBtn_clicked() {
+    if(m_isPlay) {
         ui->playBtn->setIcon(QIcon("./resource/image/播放.png"));
         m_isPlay = false;
         m_player->pause();
-    }else{
+    } else {
         ui->playBtn->setIcon(QIcon("./resource/image/暂停.png"));
         m_isPlay = true;
-
-//        int sec = m_player->getTime() / 1000 + (m_player->getTime() % 1000 == 0 ? 0 : 1);
-//        ui->timeLab->setText((sec / 60 >= 10 ? "" : "0") + QString::number(sec / 60) + ":" + QString::number(sec % 60));
         m_player->play();
     }
+}
+
+void MainW::lengthChanged(int length) {
+    int minutes = length / 1000 / 60;
+    int seconds = length / 1000 % 60;
+    totalTimeStr = "";
+    curTimeStr = "00:00";
+    if(minutes < 10) {
+        totalTimeStr += "0";
+    }
+    totalTimeStr += QString::number(minutes) + ":";
+    if(seconds < 10) {
+        totalTimeStr += "0";
+    }
+    totalTimeStr += QString::number(seconds);
+    ui->timeLab->setText(curTimeStr + "/" + totalTimeStr);
+    ui->seekSlider->setMaximum(length);
+    MediaInfoItem info = m_player->getMediaInfo();
+    ui->albumLab->setPixmap(QPixmap::fromImage(QImage(info.album)));
+}
+
+void MainW::timeChanged(int time) {
+    int minutes = time / 1000 / 60;
+    int seconds = time / 1000 % 60;
+    curTimeStr = "";
+    if(minutes < 10) {
+        curTimeStr += "0";
+    }
+    curTimeStr += QString::number(minutes) + ":";
+    if(seconds < 10) {
+        curTimeStr += "0";
+    }
+    curTimeStr += QString::number(seconds);
+    ui->timeLab->setText(curTimeStr + "/" + totalTimeStr);
+    ui->seekSlider->setValue(time);
 }

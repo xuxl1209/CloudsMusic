@@ -624,7 +624,7 @@
          <number>0</number>
         </property>
         <item>
-         <widget class="QSlider" name="horizontalSlider">
+         <widget class="QSlider" name="seekSlider">
           <property name="minimumSize">
            <size>
             <width>0</width>
@@ -636,6 +636,9 @@
             <width>16777215</width>
             <height>15</height>
            </size>
+          </property>
+          <property name="pageStep">
+           <number>1</number>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -801,13 +804,13 @@
            <widget class="QLabel" name="timeLab">
             <property name="minimumSize">
              <size>
-              <width>70</width>
+              <width>80</width>
               <height>0</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>70</width>
+              <width>80</width>
               <height>16777215</height>
              </size>
             </property>

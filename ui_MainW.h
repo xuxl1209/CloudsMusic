@@ -72,7 +72,7 @@ public:
     QWidget *contentW;
     QWidget *controlW;
     QVBoxLayout *verticalLayout;
-    QSlider *horizontalSlider;
+    QSlider *seekSlider;
     QHBoxLayout *horizontalLayout_5;
     QLabel *albumLab;
     QSpacerItem *horizontalSpacer_6;
@@ -336,13 +336,14 @@ public:
         verticalLayout->setSpacing(0);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
         verticalLayout->setContentsMargins(0, 0, 0, 0);
-        horizontalSlider = new QSlider(controlW);
-        horizontalSlider->setObjectName(QString::fromUtf8("horizontalSlider"));
-        horizontalSlider->setMinimumSize(QSize(0, 15));
-        horizontalSlider->setMaximumSize(QSize(16777215, 15));
-        horizontalSlider->setOrientation(Qt::Horizontal);
+        seekSlider = new QSlider(controlW);
+        seekSlider->setObjectName(QString::fromUtf8("seekSlider"));
+        seekSlider->setMinimumSize(QSize(0, 15));
+        seekSlider->setMaximumSize(QSize(16777215, 15));
+        seekSlider->setPageStep(1);
+        seekSlider->setOrientation(Qt::Horizontal);
 
-        verticalLayout->addWidget(horizontalSlider);
+        verticalLayout->addWidget(seekSlider);
 
         horizontalLayout_5 = new QHBoxLayout();
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
@@ -405,8 +406,8 @@ public:
 
         timeLab = new QLabel(controlW);
         timeLab->setObjectName(QString::fromUtf8("timeLab"));
-        timeLab->setMinimumSize(QSize(70, 0));
-        timeLab->setMaximumSize(QSize(70, 16777215));
+        timeLab->setMinimumSize(QSize(80, 0));
+        timeLab->setMaximumSize(QSize(80, 16777215));
 
         horizontalLayout_5->addWidget(timeLab);
 

@@ -19,15 +19,21 @@ RC_FILE += CloudsMusic.rc
 SOURCES += \
     main.cpp \
     util/MediaPlayer.cpp \
-    widget/MainW.cpp
+    util/WidgetManager.cpp \
+    widget/MainW.cpp \
+    widget/VolumeW.cpp
 
 HEADERS += \
     util/MediaPlayer.h \
+    util/Singleton.h \
     util/UTF8Code.h \
-    widget/MainW.h
+    util/WidgetManager.h \
+    widget/MainW.h \
+    widget/VolumeW.h
 
 FORMS += \
-    widget/MainW.ui
+    widget/MainW.ui \
+    widget/VolumeW.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -1,6 +1,7 @@
 ﻿#include "MainW.h"
 #include "ui_MainW.h"
 #include "util/UTF8Code.h"
+#include "util/WidgetManager.h"
 
 #include <QDebug>
 #include <QFile>
@@ -99,6 +100,9 @@ void MainW::initUI() {
     ui->playListExBtn->setIcon(QIcon("./resource/image/试听列表.png"));
     ui->playListExBtn->setIconSize(QSize(18, 18));
     ui->playListExBtn->setText("0");
+
+    m_volumeW = new VolumeW(this);
+    m_volumeW->setVisible(false);
 }
 
 void MainW::mousePressEvent(QMouseEvent *event) {
@@ -155,20 +159,27 @@ void MainW::on_playBtn_clicked() {
     }
 }
 
+void MainW::on_volumeBtn_clicked() {
+    if(m_volumeW) {
+        m_volumeW->setVisible(true);
+    }
+//    WidgetMgr::getInstance()->info();
+}
+
 void MainW::lengthChanged(int length) {
     int minutes = length / 1000 / 60;
     int seconds = length / 1000 % 60;
-    totalTimeStr = "";
-    curTimeStr = "00:00";
+    m_totalTimeStr = "";
+    m_curTimeStr = "00:00";
     if(minutes < 10) {
-        totalTimeStr += "0";
+        m_totalTimeStr += "0";
     }
-    totalTimeStr += QString::number(minutes) + ":";
+    m_totalTimeStr += QString::number(minutes) + ":";
     if(seconds < 10) {
-        totalTimeStr += "0";
+        m_totalTimeStr += "0";
     }
-    totalTimeStr += QString::number(seconds);
-    ui->timeLab->setText(curTimeStr + "/" + totalTimeStr);
+    m_totalTimeStr += QString::number(seconds);
+    ui->timeLab->setText(m_curTimeStr + "/" + m_totalTimeStr);
     ui->seekSlider->setMaximum(length);
     MediaInfoItem info = m_player->getMediaInfo();
     ui->albumLab->setPixmap(QPixmap::fromImage(QImage(info.album)));
@@ -177,15 +188,15 @@ void MainW::lengthChanged(int length) {
 void MainW::timeChanged(int time) {
     int minutes = time / 1000 / 60;
     int seconds = time / 1000 % 60;
-    curTimeStr = "";
+    m_curTimeStr = "";
     if(minutes < 10) {
-        curTimeStr += "0";
+        m_curTimeStr += "0";
     }
-    curTimeStr += QString::number(minutes) + ":";
+    m_curTimeStr += QString::number(minutes) + ":";
     if(seconds < 10) {
-        curTimeStr += "0";
+        m_curTimeStr += "0";
     }
-    curTimeStr += QString::number(seconds);
-    ui->timeLab->setText(curTimeStr + "/" + totalTimeStr);
+    m_curTimeStr += QString::number(seconds);
+    ui->timeLab->setText(m_curTimeStr + "/" + m_totalTimeStr);
     ui->seekSlider->setValue(time);
 }

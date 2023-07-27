@@ -2,7 +2,8 @@
 #include <QDebug>
 #include <QFile>
 
-MediaPlayer::MediaPlayer(QObject *parent) : QObject(parent) {
+MediaPlayer::MediaPlayer(QObject *parent) : QObject(parent)
+    ,m_volume(30) {
     m_instance = new VlcInstance(VlcCommon::args(), this);
     m_player = new VlcMediaPlayer(m_instance);
     connect(m_player, &VlcMediaPlayer::lengthChanged, this, &MediaPlayer::slotLengthChanged);
@@ -51,6 +52,11 @@ void MediaPlayer::pause() {
 
 void MediaPlayer::stop() {
     m_player->stop();
+}
+
+void MediaPlayer::setVolum(int volume) {
+    m_volume = volume;
+    m_player->audio()->setVolume(volume);
 }
 
 MediaInfoItem MediaPlayer::getMediaInfo() {

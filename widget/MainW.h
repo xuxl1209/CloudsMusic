@@ -15,7 +15,8 @@
 #include <QPoint>
 #include <QWidget>
 
-#include <util/MediaPlayer.h>
+#include "util/MediaPlayer.h"
+#include "VolumeW.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainW; }
@@ -70,6 +71,8 @@ private slots:
      */
     void on_playBtn_clicked();
 
+    void on_volumeBtn_clicked();
+
     void lengthChanged(int length);
 
     void timeChanged(int time);
@@ -87,8 +90,10 @@ private:
 
     MediaPlayer* m_player = nullptr;
 
-    QString totalTimeStr;
+    QString m_totalTimeStr;
 
-    QString curTimeStr;
+    QString m_curTimeStr;
+
+    VolumeW *m_volumeW = nullptr;
 };
 #endif // MAINW_H

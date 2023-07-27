@@ -19,6 +19,7 @@
 #include "VLCQtCore/MediaPlayer.h"
 #include "VLCQtCore/MetaManager.h"
 #include "VLCQtCore/TrackModel.h"
+#include "VLCQtCore/Audio.h"
 
 struct MediaInfoItem {
     QString album;
@@ -52,6 +53,10 @@ public:
 
     void stop();
 
+    int volum() const { return m_volume; }
+
+    void setVolum(int volume);
+
     MediaInfoItem getMediaInfo();
 
 signals:
@@ -64,11 +69,13 @@ protected slots:
 
     void slotTimeChanged(int time);
 
+
 private:
     VlcInstance *m_instance = nullptr;
     VlcMedia *m_media = nullptr;
     VlcMediaPlayer *m_player = nullptr;
     VlcMetaManager *m_meta = nullptr;
+    int m_volume;
 };
 
 #endif // MEDIAPLAYER_H

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>61</width>
-    <height>300</height>
+    <height>176</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -31,6 +31,18 @@
    </property>
    <item>
     <widget class="QSlider" name="volumeSlider">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximum">
+      <number>100</number>
+     </property>
+     <property name="value">
+      <number>100</number>
+     </property>
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
@@ -38,13 +50,13 @@
    </item>
    <item>
     <widget class="QPushButton" name="volumeBtn">
-     <property name="minimumSize">
-      <size>
-       <width>30</width>
-       <height>30</height>
-      </size>
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Minimum" vsizetype="Minimum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
      </property>
-     <property name="maximumSize">
+     <property name="minimumSize">
       <size>
        <width>30</width>
        <height>30</height>

@@ -77,6 +77,8 @@ private slots:
 
     void timeChanged(int time);
 
+    void volumeChanged(int value);
+
 private:
     Ui::MainW *ui;
 

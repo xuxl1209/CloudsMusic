@@ -12,6 +12,7 @@
 
 #include <QDebug>
 #include <QObject>
+#include <QWidget>
 #include <memory>
 
 #include "../util/Singleton.h"
@@ -22,6 +23,15 @@ class WidgetManager : public QObject
 public:
 
     explicit WidgetManager(QObject *parent = nullptr);
+
+    void setMainWidget(QWidget *widget);
+
+    QWidget *mainWidget() { return m_mainW; }
+
+    bool move(QWidget *widget, int x, int y);
+
+private:
+    QWidget* m_mainW = nullptr;
 };
 
 typedef Singleton<WidgetManager> WidgetMgr;

@@ -20,17 +20,22 @@ MainW::MainW(QWidget *parent)
     setWindowTitle("无限云音乐");
     setWindowFlags(Qt::FramelessWindowHint);
 
+    m_volumeW = new VolumeW(this);
+    m_volumeW->setVisible(false);
+
     initUI();
     QString file = "E:/WorkSpace/Media/英雄联盟 _ Against the Current - Legends Never Die.mp3";
     m_player->loadMedia(file);
 
     connect(m_player, &MediaPlayer::lengthChanged, this, &MainW::lengthChanged);
     connect(m_player, &MediaPlayer::timeChanged, this, &MainW::timeChanged);
+    connect(m_volumeW, &VolumeW::valueChanged, this, &MainW::volumeChanged);
 }
 
 MainW::~MainW() {
     disconnect(m_player, &MediaPlayer::lengthChanged, this, &MainW::lengthChanged);
     disconnect(m_player, &MediaPlayer::timeChanged, this, &MainW::timeChanged);
+    disconnect(m_volumeW, &VolumeW::valueChanged, this, &MainW::volumeChanged);
     if(m_player){
         m_player->stop();
         delete m_player;
@@ -99,10 +104,7 @@ void MainW::initUI() {
 
     ui->playListExBtn->setIcon(QIcon("./resource/image/试听列表.png"));
     ui->playListExBtn->setIconSize(QSize(18, 18));
-    ui->playListExBtn->setText("0");
-
-    m_volumeW = new VolumeW(this);
-    m_volumeW->setVisible(false);
+    ui->playListExBtn->setText("0"); 
 }
 
 void MainW::mousePressEvent(QMouseEvent *event) {
@@ -161,9 +163,9 @@ void MainW::on_playBtn_clicked() {
 
 void MainW::on_volumeBtn_clicked() {
     if(m_volumeW) {
+        WidgetMgr::getInstance()->move(m_volumeW, 200 + (width() - 200) / 2 + 75 - (m_volumeW->width() / 2), 0);
         m_volumeW->setVisible(true);
     }
-//    WidgetMgr::getInstance()->info();
 }
 
 void MainW::lengthChanged(int length) {
@@ -199,4 +201,10 @@ void MainW::timeChanged(int time) {
     m_curTimeStr += QString::number(seconds);
     ui->timeLab->setText(m_curTimeStr + "/" + m_totalTimeStr);
     ui->seekSlider->setValue(time);
+}
+
+void MainW::volumeChanged(int value) {
+    if(m_player) {
+        m_player->setVolum(value);
+    }
 }

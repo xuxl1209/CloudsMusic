@@ -10,6 +10,7 @@
 #ifndef VOLUMEW_H
 #define VOLUMEW_H
 
+#include <QMouseEvent>
 #include <QWidget>
 
 namespace Ui {
@@ -23,6 +24,14 @@ class VolumeW : public QWidget
 public:
     explicit VolumeW(QWidget *parent = nullptr);
     ~VolumeW();
+
+    void mousePressEvent(QMouseEvent *event);
+
+signals:
+    void valueChanged(int value);
+
+private slots:
+    void on_volumeSlider_valueChanged(int value);
 
 private:
     Ui::VolumeW *ui;

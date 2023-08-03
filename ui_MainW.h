@@ -75,6 +75,7 @@ public:
     QSlider *seekSlider;
     QHBoxLayout *horizontalLayout_5;
     QLabel *albumLab;
+    QSpacerItem *horizontalSpacer_7;
     QSpacerItem *horizontalSpacer_6;
     QHBoxLayout *horizontalLayout_6;
     QPushButton *cycleBtn;
@@ -346,6 +347,7 @@ public:
         verticalLayout->addWidget(seekSlider);
 
         horizontalLayout_5 = new QHBoxLayout();
+        horizontalLayout_5->setSpacing(5);
         horizontalLayout_5->setObjectName(QString::fromUtf8("horizontalLayout_5"));
         horizontalLayout_5->setContentsMargins(30, -1, 30, -1);
         albumLab = new QLabel(controlW);
@@ -354,6 +356,10 @@ public:
         albumLab->setMaximumSize(QSize(40, 40));
 
         horizontalLayout_5->addWidget(albumLab);
+
+        horizontalSpacer_7 = new QSpacerItem(90, 20, QSizePolicy::Fixed, QSizePolicy::Minimum);
+
+        horizontalLayout_5->addItem(horizontalSpacer_7);
 
         horizontalSpacer_6 = new QSpacerItem(40, 20, QSizePolicy::Expanding, QSizePolicy::Minimum);
 

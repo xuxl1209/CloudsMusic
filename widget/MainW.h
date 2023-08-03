@@ -88,6 +88,8 @@ private:
 
     bool m_isMousePress;
 
+    bool m_volumeBtnChecked;
+
     QPoint m_mousePressPoint;
 
     MediaPlayer* m_player = nullptr;

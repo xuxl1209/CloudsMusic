@@ -14,6 +14,7 @@ MainW::MainW(QWidget *parent)
     , m_isPlay(false)
     , m_isMax(false)
     , m_isMousePress(false)
+    , m_volumeBtnChecked(false)
     , m_mousePressPoint(-1, -1)
     , m_player(new MediaPlayer) {
     ui->setupUi(this);
@@ -22,6 +23,7 @@ MainW::MainW(QWidget *parent)
 
     m_volumeW = new VolumeW(this);
     m_volumeW->setVisible(false);
+    this->installEventFilter(m_volumeW);
 
     initUI();
     QString file = "E:/WorkSpace/Media/英雄联盟 _ Against the Current - Legends Never Die.mp3";
@@ -162,10 +164,14 @@ void MainW::on_playBtn_clicked() {
 }
 
 void MainW::on_volumeBtn_clicked() {
-    if(m_volumeW) {
-        WidgetMgr::getInstance()->move(m_volumeW, 200 + (width() - 200) / 2 + 75 - (m_volumeW->width() / 2), 0);
+    if(!m_volumeBtnChecked && m_volumeW) {
+        m_volumeBtnChecked = true;
         m_volumeW->setVisible(true);
+        QApplication::setActiveWindow(m_volumeW);
+    }else{
+        m_volumeBtnChecked = false;
     }
+
 }
 
 void MainW::lengthChanged(int length) {

@@ -11,6 +11,7 @@
 #define WIDGETMANAGER_H
 
 #include <QDebug>
+#include <QEvent>
 #include <QObject>
 #include <QWidget>
 #include <memory>
@@ -28,10 +29,10 @@ public:
 
     QWidget *mainWidget() { return m_mainW; }
 
-    bool move(QWidget *widget, int x, int y);
+    bool move(QWidget *widget, int x, int y, bool isGlobal = true);
 
 private:
-    QWidget* m_mainW = nullptr;
+    QWidget* m_mainW = nullptr;    
 };
 
 typedef Singleton<WidgetManager> WidgetMgr;

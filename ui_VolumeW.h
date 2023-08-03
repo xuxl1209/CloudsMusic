@@ -29,7 +29,7 @@ public:
     {
         if (VolumeW->objectName().isEmpty())
             VolumeW->setObjectName(QString::fromUtf8("VolumeW"));
-        VolumeW->resize(61, 176);
+        VolumeW->resize(55, 190);
         verticalLayout = new QVBoxLayout(VolumeW);
         verticalLayout->setSpacing(5);
         verticalLayout->setObjectName(QString::fromUtf8("verticalLayout"));
@@ -42,7 +42,7 @@ public:
         sizePolicy.setHeightForWidth(volumeSlider->sizePolicy().hasHeightForWidth());
         volumeSlider->setSizePolicy(sizePolicy);
         volumeSlider->setMaximum(100);
-        volumeSlider->setValue(100);
+        volumeSlider->setValue(0);
         volumeSlider->setOrientation(Qt::Vertical);
 
         verticalLayout->addWidget(volumeSlider);

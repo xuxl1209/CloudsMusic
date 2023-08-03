@@ -10,6 +10,7 @@
 #ifndef VOLUMEW_H
 #define VOLUMEW_H
 
+#include <QEvent>
 #include <QMouseEvent>
 #include <QWidget>
 
@@ -25,7 +26,10 @@ public:
     explicit VolumeW(QWidget *parent = nullptr);
     ~VolumeW();
 
+    bool event(QEvent *event);
+    bool eventFilter(QObject *watched, QEvent *event);
     void mousePressEvent(QMouseEvent *event);
+    void paintEvent(QPaintEvent *event);
 
 signals:
     void valueChanged(int value);
